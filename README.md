@@ -6,10 +6,11 @@
 
 ## Development
 
-If you have an existing extension that uses `extlib@X.X.X.phar` and want to develop patches, then
-simply clone this folder and/or make symlink. Give it a fake version number (`1.999.0`) which supercedes any other copies.
+If you have an existing extension that uses `extlib@X.X.X.phar` and want to develop updates, then
+simply clone this repo and assign a fake version number (`1.999.0`). You may optionally use symlinks.
 
-I'm currently using a symlink approach. This is because I *think about* `extlib` as a separate project.
+I'm currently using the symlink approach. This is because I *think about* `extlib` as a separate project
+which is shared by many extensions.
 
 ```bash
 ## Make a standalone copy of the library
