@@ -4,22 +4,6 @@
 * Can be copied into extensions (e.g. via civix)
 * Participates in the [pathload](https://github.com/totten/pathload-poc/) scheme for version-resolution
 
-## Build
-
-To make a make single-file build of this library, run:
-
-```bash
-./scripts/build.sh X.X.X
-ls -l dist/
-```
-
-You should see two files like:
-
-```
-dist/extlib@X.X.X.phar
-dist/extlib@X.X.X.php
-```
-
 ## Development
 
 If you have an existing extension that uses `extlib@X.X.X.phar` and want to develop patches, then
@@ -44,3 +28,18 @@ cd /path/to/my-extension/mixin/lib
 git clone https://github.com/civicrm/extlib extlib@1.999.0
 ```
 
+## Build
+
+To build a copy of this library for redistribution, run:
+
+```bash
+./scripts/build.sh X.X.X
+ls -l dist/
+```
+
+You should see two files like:
+
+```
+dist/extlib@X.X.X.phar
+dist/extlib@X.X.X.php
+```
