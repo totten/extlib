@@ -6,16 +6,23 @@
 
 ## Build
 
-To make a make single-file representation of this extension (`extlib@X.X.X.phar` or `extlib@X.X.X.php`), run:
+To make a make single-file build of this library, run:
 
 ```bash
-./scripts/build.sh
+./scripts/build.sh X.X.X
 ls -l dist/
+```
+
+You should see two files like:
+
+```
+dist/extlib@X.X.X.phar
+dist/extlib@X.X.X.php
 ```
 
 ## Development
 
-If you an existing extension that uses ``extlib@X.X.X.phar` and want to develop patches, you can simply
+If you an existing extension that uses `extlib@X.X.X.phar` and want to develop patches, you can simply
 add another folder or symlink this codebase. For example:
 
 ```bash
