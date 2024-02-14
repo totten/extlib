@@ -7,9 +7,11 @@ namespace Civi\Extlib\Upgrader;
  * using XML schema files (`SqlInstaller`). It also calls-out to any custom
  * upgrade code (eg `CRM_Myext_Upgrader`).
  *
+ * To simplify backport considerations, `Automatic` does not support subclassing.
+ *
  * Target: CiviCRM v5.38+
  */
-class Automatic implements \CRM_Extension_Upgrader_Interface {
+final class Automatic implements \CRM_Extension_Upgrader_Interface {
 
   use IdentityTrait {
     init as initIdentity;

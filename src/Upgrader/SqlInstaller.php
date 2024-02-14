@@ -9,9 +9,11 @@ namespace Civi\Extlib\Upgrader;
  * Details such as character-sets and collations are determined dynamically,
  * to match the local system.
  *
+ * To simplify backport considerations, `SqlInstaller` does not support subclassing.
+ *
  * Target: CiviCRM v5.38+
  */
-class SqlInstaller implements \CRM_Extension_Upgrader_Interface {
+final class SqlInstaller implements \CRM_Extension_Upgrader_Interface {
 
   use IdentityTrait;
 
