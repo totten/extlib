@@ -145,7 +145,7 @@ class SqlInstaller implements \CRM_Extension_Upgrader_Interface {
     return [
       'name' => '',
       'attributes' => '',
-      'tableAttributes_modern' => 'ENGINE=InnoDB',
+      'tableAttributes_modern' => 'ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC',
       'tableAttributes_simple' => 'ENGINE=InnoDB',
       // ^^ Set very limited defaults.
       // Existing deployments may be inconsistent with respect to charsets and collations, and
