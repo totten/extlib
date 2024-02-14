@@ -11,24 +11,31 @@ namespace Civi\Extlib\Upgrader;
  */
 class Automatic implements \CRM_Extension_Upgrader_Interface {
 
-  /**
-   * @var string|null
-   */
-  private $key;
+  use IdentityTrait {
+    init as initIdentity;
+  }
 
   /**
    * Optionally delegate to "CRM_Myext_Upgrader" or "Civi\Myext\Upgrader".
    *
    * @var \CRM_Extension_Upgrader_Interface|null
    */
-  private $delegate;
+  private $customUpgrader;
+
+  /**
+   * @var \CRM_Extension_Upgrader_Interface|null
+   */
+  private $sqlInstaller;
 
   public function init(array $params) {
-    $this->key = $params['key'];
+    $this->initIdentity($params);
     if ($info = $this->getInfo()) {
+      $this->sqlInstaller = new SqlInstaller();
+      $this->sqlInstaller->init($params);
+
       if ($class = $this->getDelegateUpgraderClass($info)) {
-        $this->delegate = new $class();
-        $this->delegate->init($params);
+        $this->customUpgrader = new $class();
+        $this->customUpgrader->init($params);
       }
     }
   }
@@ -39,22 +46,17 @@ class Automatic implements \CRM_Extension_Upgrader_Interface {
       return;
     }
 
-    // if ($event === 'install') {
-    //    TODO: Check the XML files. Generate and evaluate the SQL.
-    // }
-
-    if ($this->delegate) {
-      $this->delegate->notify($event, $params);
+    $sqlEarlyEvents = ['install', 'enable'];
+    if (in_array($event, $sqlEarlyEvents)) {
+      $this->sqlInstaller->notify($event, $params);
     }
-  }
 
-  public function getInfo(): ?\CRM_Extension_Info {
-    try {
-      return \CRM_Extension_System::singleton()->getMapper()->keyToInfo($this->key);
+    if ($this->customUpgrader) {
+      $this->customUpgrader->notify($event, $params);
     }
-    catch (\CRM_Extension_Exception_ParseException $e) {
-      \Civi::log()->error("Parse error in extension " . $this->key . ": " . $e->getMessage());
-      return NULL;
+
+    if (!in_array($event, $sqlEarlyEvents)) {
+      $this->sqlInstaller->notify($event, $params);
     }
   }
 
