@@ -142,10 +142,12 @@ class SqlInstaller implements \CRM_Extension_Upgrader_Interface {
    * @return array
    */
   private function getDefaultDatabase(): array {
+    $collation = \CRM_Core_BAO_SchemaHandler::getInUseCollation();
+    $characterSet = (stripos($collation, 'utf8mb4') !== FALSE) ? 'utf8mb4' : 'utf8';
     return [
       'name' => '',
       'attributes' => '',
-      'tableAttributes_modern' => 'ENGINE=InnoDB',
+      'tableAttributes_modern' => "ENGINE=InnoDB DEFAULT CHARACTER SET {$characterSet} COLLATE {$collation}",
       'tableAttributes_simple' => 'ENGINE=InnoDB',
       // ^^ Set very limited defaults.
       // Existing deployments may be inconsistent with respect to charsets and collations, and
