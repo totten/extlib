@@ -3,11 +3,11 @@
 namespace Civi\Extlib\Upgrader;
 
 /**
- * The "Automatic" extension upgrader has built-in support for the XML schema files.
- * During installation and uninstallation, it will automatically generate and execute suitable SQL.
+ * The "Automatic" extension upgrader will setup and destroy the SQL tables
+ * using XML schema files (`SqlInstaller`). It also calls-out to any custom
+ * upgrade code (eg `CRM_Myext_Upgrader`).
  *
- * Additionally, extensions have their own "Upgrader" classes to define the schema-revisions.
- * This will delegate to the existing upgrader and apply the same schema-revisions.
+ * Target: CiviCRM v5.38+
  */
 class Automatic implements \CRM_Extension_Upgrader_Interface {
 
